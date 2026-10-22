@@ -3,7 +3,7 @@ import Badge from "./Badge.jsx";
 
 // Change this line (or the tagline) and push a commit to see a new deployment.
 const VERSION = "v1";
-const TAGLINE = "I build things that ship.";
+const TAGLINE = "I want to work at Vercel!";
 
 const env = import.meta.env;
 const sha = env.ORBIT_GIT_COMMIT_SHA ?? "0f6e3a9";
