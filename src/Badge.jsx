@@ -25,7 +25,7 @@ export default function Badge({ front, back }) {
       rz: 0,
       rzV: 0,
       rx: 0,
-      ry: -160,
+      ry: 0,
       ryV: 0,
       face: 0,
       drag: null,
@@ -42,8 +42,8 @@ export default function Badge({ front, back }) {
       s.length = Math.max(60, (H - s.h) / 2 - s.anchor.y - 10);
     }
     layout();
-    // Drop in from above the screen.
-    s.p = { x: s.anchor.x + 40, y: -s.h - 80 };
+    // Start hanging at rest.
+    s.p = { x: s.anchor.x, y: s.anchor.y + s.length + GRAVITY / STIFFNESS };
 
     function step(f) {
       const { p, v, anchor } = s;
