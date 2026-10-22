@@ -11,6 +11,6 @@ A Vite + React badge you can drag, fling and flip, deployed with [Orbit](../../R
 - `vercel.json` adds routing rules that Orbit applies at the edge:
   - `/old-about` permanently redirects (308) to `/about`
   - `/hello/<name>` is rewritten to the function, so `/hello/sagar` returns `/api/hello?name=sagar` with the URL unchanged
-  - every response gets `X-Frame-Options: DENY` and `X-Powered-By: Orbit`
+  - every response gets `X-Content-Type-Options: nosniff` and `X-Powered-By: Orbit`
 
 Push this folder to your own public GitHub repo, then import it in Orbit.
