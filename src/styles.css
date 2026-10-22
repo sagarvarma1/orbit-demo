@@ -123,6 +123,7 @@ body {
   inset: 0;
   border-radius: 18px;
   overflow: hidden;
+  -webkit-backface-visibility: hidden;
   backface-visibility: hidden;
   background:
     linear-gradient(160deg, hsl(var(--hue) 60% 14%), #0b0b0b 55%),
@@ -132,15 +133,19 @@ body {
     0 30px 60px -20px #000,
     inset 0 1px 0 #ffffff1a;
 }
+/* Lift each face off the card's plane so the GPU never has to decide between two surfaces
+   at the same depth, which shows up as the faces flickering into each other. */
+.front {
+  transform: translateZ(0.5px);
+}
 .back {
-  transform: rotateY(180deg);
+  transform: rotateY(180deg) translateZ(0.5px);
 }
 .foil {
   position: absolute;
   inset: 0;
   pointer-events: none;
-  mix-blend-mode: color-dodge;
-  opacity: 0.22;
+  opacity: 0.12;
   background: linear-gradient(
     115deg,
     transparent 20%,

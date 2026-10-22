@@ -151,15 +151,21 @@ export default function Badge({ front, back }) {
       const tilt = lerp(p.tilt, s.tilt, alpha);
       const rz = (-Math.atan2(bx - ax, by - ay) * 180) / Math.PI;
 
-      card.style.transform = `translate3d(${ax - s.w / 2}px, ${ay}px, 0) rotateZ(${rz}deg) rotateY(${ry + tilt}deg)`;
-      card.style.setProperty("--shine", `${(((ry % 360) + 360) % 360) / 3.6 + rz}%`);
+      // Round, and only touch the DOM when something visibly changed, so a card at rest is left
+      // completely alone instead of being re-rendered every frame.
+      const r = (v) => v.toFixed(2);
+      const transform = `translate3d(${r(ax - s.w / 2)}px, ${r(ay)}px, 0) rotateZ(${r(rz)}deg) rotateY(${r(ry + tilt)}deg)`;
+      if (transform === s.lastTransform) return;
+      s.lastTransform = transform;
+      card.style.transform = transform;
+      card.style.setProperty("--shine", `${r((((ry % 360) + 360) % 360) / 3.6 + rz)}%`);
 
       const { anchor } = s;
       const d = Math.hypot(ax - anchor.x, ay - anchor.y);
       const sag = d < s.length ? Math.sqrt(s.length ** 2 - d ** 2) * 0.7 : 0;
       const cx = (anchor.x + ax) / 2;
       const cy = (anchor.y + ay) / 2 + sag;
-      const path = `M ${anchor.x} ${anchor.y} Q ${cx} ${cy} ${ax} ${ay + 6}`;
+      const path = `M ${r(anchor.x)} ${r(anchor.y)} Q ${r(cx)} ${r(cy)} ${r(ax)} ${r(ay + 6)}`;
       strapRef.current.setAttribute("d", path);
       textRef.current.setAttribute("d", path);
     }
@@ -237,6 +243,7 @@ export default function Badge({ front, back }) {
       layout();
       if (!s.drag) hangAtRest();
       s.prev = null;
+      s.lastTransform = null;
     }
 
     card.addEventListener("pointerdown", onDown);
