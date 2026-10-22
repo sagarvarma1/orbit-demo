@@ -1,0 +1,13 @@
+{
+  "redirects": [{ "source": "/old-about", "destination": "/about" }],
+  "rewrites": [{ "source": "/hello/:name", "destination": "/api/hello?name=:name" }],
+  "headers": [
+    {
+      "source": "/(.*)",
+      "headers": [
+        { "key": "X-Frame-Options", "value": "DENY" },
+        { "key": "X-Powered-By", "value": "Orbit" }
+      ]
+    }
+  ]
+}
